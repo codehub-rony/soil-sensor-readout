@@ -24,6 +24,6 @@ while True:
  
     print("temp: " + str(temp) + "  moisture: " + str(touch))
     cur.execute("INSERT INTO  raspi (TEMP, HUMIDITY) VALUES (%s, %s)", (temp, moisture))
-	con.commit()
+    con.commit()
     time.sleep(60)
 
