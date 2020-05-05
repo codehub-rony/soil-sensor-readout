@@ -1,4 +1,10 @@
+#!/usr/bin/python
 import time
+import psycopg2
+
+# connnect to database
+con = psycopg2.connect(database='', user='')
+cur = con.cursor()
  
 from board import SCL, SDA
 import busio
@@ -11,10 +17,13 @@ ss = Seesaw(i2c_bus, addr=0x36)
  
 while True:
     # read moisture level through capacitive touch pad
-    touch = ss.moisture_read()
+    moisture = ss.moisture_read()
  
     # read temperature from the temperature sensor
     temp = ss.get_temp()
  
     print("temp: " + str(temp) + "  moisture: " + str(touch))
-    time.sleep(1)
+    cur.execute("INSERT INTO  raspi (TEMP, HUMIDITY) VALUES (%s, %s)", (temp, moisture))
+	con.commit()
+    time.sleep(60)
+
