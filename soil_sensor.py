@@ -3,7 +3,7 @@ import time
 import psycopg2
 import busio
 from board import SCL, SDA
-from adafruit_seesaw.saw import Seesaw
+from adafruit_seesaw.seesaw import Seesaw
 
 # connnect to database
 con = psycopg2.connect(database='', user='', password="", host='localhost')
