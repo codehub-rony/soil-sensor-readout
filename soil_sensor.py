@@ -5,6 +5,9 @@ import busio
 from board import SCL, SDA
 from adafruit_seesaw.seesaw import Seesaw
 
+# Current plant that is being monitored
+plant = 'palm'
+
 # connnect to database
 con = psycopg2.connect(database='', user='', password='', host='localhost')
 cur = con.cursor()
@@ -23,5 +26,5 @@ moisture = round((moisture_measurements / 15))
 temp = round(ss.get_temp(),1)
  
 print("temp: " + str(temp) + "  moisture: " + str(moisture))
-cur.execute("INSERT INTO  soil_measurements (TEMP, MOISTURE) VALUES (%s, %s)", (temp, moisture))
+cur.execute("INSERT INTO  soil_measurements (TEMP, MOISTURE, PLANT) VALUES (%s, %s, %s)", (temp, moisture, plant))
 con.commit()
