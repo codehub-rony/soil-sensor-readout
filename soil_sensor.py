@@ -12,8 +12,12 @@ cur = con.cursor()
 i2c_bus = busio.I2C(SCL, SDA)
 ss = Seesaw(i2c_bus, addr=0x36)
  
-# read moisture level through capacitive touch pad
-moisture = ss.moisture_read()
+# read moisture level through capacitive touch pad 10 times and take average to eliminate measure error
+
+for i in range(10):
+ moisture_measurements = moisture_measurements + ss.moisture_read())
+ 
+moisture = round((moisture_measurements / 10), 0)
  
 # read temperature from the temperature sensor
 temp = ss.get_temp()
