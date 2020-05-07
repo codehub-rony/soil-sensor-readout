@@ -2,6 +2,7 @@
 import time
 import psycopg2
 import busio
+from config import *
 from board import SCL, SDA
 from adafruit_seesaw.seesaw import Seesaw
 
@@ -9,10 +10,11 @@ from adafruit_seesaw.seesaw import Seesaw
 plant = 'palm'
 
 # connnect to database
-con = psycopg2.connect(database='', user='', password='', host='localhost')
+con = psycopg2.connect(database=target_db, user=db_user, password=user_password, host='localhost')
 cur = con.cursor()
  
 i2c_bus = busio.I2C(SCL, SDA)
+
 ss = Seesaw(i2c_bus, addr=0x36)
  
 # read moisture level several times and take average to limit measure error
