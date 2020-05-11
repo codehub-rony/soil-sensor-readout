@@ -18,17 +18,30 @@ i2c_bus = busio.I2C(SCL, SDA)
 ss = Seesaw(i2c_bus, addr=0x36)
  
 # read moisture level several times and take average to limit measure error
-moisture_measurements = 0
+measurements = 0
+max_moisture = 0
+min_moisture = 2000
+
 for i in range(15):
- moisture_measurements = moisture_measurements + ss.moisture_read()
+ moisture_measurement = ss.moisture_read()
+ measurements = measurements + moisture_measurement
  
-moisture = round((moisture_measurements / 15))
+ if moisture_measurement > max_moisture:
+  max_moisture = moisture_measurement
+
+ if moisture_measurement < min_moisture:
+  min_moisture = moisture_measurement
+ 
+avg_moisture = round((measurements / 15))
  
 # read temperature from the temperature sensor
 temp = round(ss.get_temp(),1)
  
-print("temp: " + str(temp) + "  moisture: " + str(moisture))
-cur.execute("INSERT INTO  soil_measurements (MOISTURE, PLANT) VALUES (%s, %s)", (moisture, plant))
+print("temp: " + str(temp))
+print("average moisture: " + str(avg_moisture))
+print("max moisture: " + str(max_moisture))
+print("min moisture: " + str(min_moisture))
+cur.execute("INSERT INTO soil_measurements (MOISTURE, MAX_MOISTURE, MIN_MOISTURE, PLANT) VALUES (%s, %s, %s, %s)", (avg_moisture, max_moisture, min_moisture, plant))
 
 #con.commit()
 cur.execute("INSERT INTO temp_measurements (TEMP, PLANT) VALUES (%s, %s)", (temp, plant))
