@@ -3,8 +3,10 @@ python script for reading measurements from adafruit stemma soils sensor and sav
 
 1. enable i2c https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c
 
-2. install `adafruit seesaw` https://learn.adafruit.com/adafruit-stemma-soil-sensor-i2c-capacitive-moisture-sensor/python-circuitpython-test
+2. install `adafruit seesaw` with `adafruit-circuitpython-seesaw` https://learn.adafruit.com/adafruit-stemma-soil-sensor-i2c-capacitive-moisture-sensor/python-circuitpython-test
 
+
+installing `busio`will not work for some reason, but it is integrated in the adafruit seesaw package. So install that first will solve issue with busio
 
 Set the script to run on a hourly base. Check where your pipenv is installed
 https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804
