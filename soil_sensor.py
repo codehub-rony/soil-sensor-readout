@@ -5,6 +5,7 @@ import busio
 from config import *
 from board import SCL, SDA
 from adafruit_seesaw.seesaw import Seesaw
+#import relais_control
 
 # Current plant that is being monitored
 plant = 'eettafel'
@@ -37,6 +38,9 @@ avg_moisture = round((measurements / 15))
 # read temperature from the temperature sensor
 temp = round(ss.get_temp(),1)
  
+#if avg_moisture < 700:
+#	relais_control.waterPlant()
+
 print("temp: " + str(temp))
 print("average moisture: " + str(avg_moisture))
 print("max moisture: " + str(max_moisture))
