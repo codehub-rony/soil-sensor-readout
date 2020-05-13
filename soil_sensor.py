@@ -11,23 +11,22 @@ import datetime
 
 def waterPlant():
 	print(GPIO.getmode())
-	GPIO.cleanup()
-	if GPIO.getmode() != GPIO.BOARD:
-		GPIO.setmode(GPIO.BOARD)
+	# if GPIO.getmode() != GPIO.BOARD:
+	# 	GPIO.setmode(GPIO.BOARD)
 
-	GPIO.setup(37, GPIO.OUT)
+	# GPIO.setup(37, GPIO.OUT)
 	
-	time.sleep(2)
-	for i in range(4):
-		GPIO.output(37, True)
-		print('switching pump: ON')
-		time.sleep(10)
-		GPIO.output(37, False)
-		print('pump: OFF')	
-		time.sleep(5)
+	# time.sleep(2)
+	# for i in range(4):
+	# 	GPIO.output(37, True)
+	# 	print('switching pump: ON')
+	# 	time.sleep(10)
+	# 	GPIO.output(37, False)
+	# 	print('pump: OFF')	
+	# 	time.sleep(5)
 
 
-	GPIO.cleanup()
+	# GPIO.cleanup()
 	print('DONE')
 
 # Current plant that is being monitored
