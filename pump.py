@@ -8,7 +8,7 @@ def waterPlant():
     print(GPIO.getmode())
     GPIO.cleanup()
 	if GPIO.getmode() != GPIO.BOARD:
-            GPIO.setmode(GPIO.BOARD)
+        GPIO.setmode(GPIO.BOARD)
 	
 	GPIO.setup(37, GPIO.OUT)
 	
