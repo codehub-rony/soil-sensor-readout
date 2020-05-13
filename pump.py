@@ -5,8 +5,8 @@ import datetime
 import time
 
 def waterPlant():
-        print(GPIO.getmode())
-        GPIO.cleanup()
+    print(GPIO.getmode())
+    GPIO.cleanup()
 	if GPIO.getmode() != GPIO.BOARD:
             GPIO.setmode(GPIO.BOARD)
 	
