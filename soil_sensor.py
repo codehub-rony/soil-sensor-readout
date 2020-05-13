@@ -38,8 +38,8 @@ avg_moisture = round((measurements / 15))
 # read temperature from the temperature sensor
 temp = round(ss.get_temp(),1)
  
-if avg_moisture < 720:
-	pump.waterPlant()
+#if avg_moisture < 720:
+ pump.waterPlant()
 
 print("temp: " + str(temp))
 print("average moisture: " + str(avg_moisture))
