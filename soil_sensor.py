@@ -10,21 +10,22 @@ import RPi.GPIO as GPIO
 import datetime
 
 def waterPlant():
-  print(GPIO.getmode())
-  GPIO.cleanup()
+	print(GPIO.getmode())
+	GPIO.cleanup()
 	if GPIO.getmode() != GPIO.BOARD:
-    GPIO.setmode(GPIO.BOARD)
-	
+		GPIO.setmode(GPIO.BOARD)
+
 	GPIO.setup(37, GPIO.OUT)
 	
 	time.sleep(2)
 	for i in range(4):
-	  GPIO.output(37, True)
-	  print('switching pump: ON')
-	  time.sleep(10)
-	  GPIO.output(37, False)
-	  print('pump: OFF')
-	  time.sleep(5)
+		GPIO.output(37, True)
+	 	print('switching pump: ON')
+	 	time.sleep(10)
+	 	GPIO.output(37, False)
+	 	print('pump: OFF')	
+	 	time.sleep(5)
+
 
 	GPIO.cleanup()
 	print('DONE')
@@ -46,22 +47,22 @@ max_moisture = 0
 min_moisture = 2000
 
 for i in range(15):
- moisture_measurement = ss.moisture_read()
- measurements = measurements + moisture_measurement
- 
- if moisture_measurement > max_moisture:
-  max_moisture = moisture_measurement
+	moisture_measurement = ss.moisture_read() 
+	measurements = measurements + moisture_measurement
 
- if moisture_measurement < min_moisture:
-  min_moisture = moisture_measurement
- 
+	if moisture_measurement > max_moisture:
+		max_moisture = moisture_measurement
+
+	if moisture_measurement < min_moisture:
+		min_moisture = moisture_measurement
+
 avg_moisture = round((measurements / 15))
- 
+
 # read temperature from the temperature sensor
 temp = round(ss.get_temp(),1)
  
 if avg_moisture < 720:
- waterPlant()
+	waterPlant()
 
 print("temp: " + str(temp))
 print("average moisture: " + str(avg_moisture))
