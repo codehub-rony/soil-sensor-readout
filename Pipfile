@@ -9,6 +9,7 @@ verify_ssl = true
 psycopg2 = "*"
 adafruit-circuitpython-seesaw = "*"
 rpi-gpio = "*"
+adafruit-dht = "*"
 
 [requires]
 python_version = "3.7"

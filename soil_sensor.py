@@ -8,24 +8,30 @@ from adafruit_seesaw.seesaw import Seesaw
 # import pump
 import RPi.GPIO as GPIO
 import datetime
+import Adafruit_DHT
 
 def waterPlant():
 	print(GPIO.getmode())
-	GPIO.setup(37, GPIO.OUT)
+	GPIO.setup(26, GPIO.OUT)
 	
 	time.sleep(2)
 	for i in range(4):
-		GPIO.output(37, True)
+		GPIO.output(26, True)
 		print('switching pump: ON')
-		time.sleep(10)
-		GPIO.output(37, False)
+		time.sleep(225)
+		GPIO.output(26, False)
 		print('pump: OFF')	
 		time.sleep(5)
 
 	print('DONE')
 
+# DHT22 sensor readout
+dht_sensor = Adafruit_DHT.DHT22
+dht_pin = 4
+air_humidity, air_temperature = Adafruit_DHT.read_retry(dht_sensor, dht_pin)
+
 # Current plant that is being monitored
-plant = 'eettafel'
+plant = 'palm'
 
 # connnect to database
 con = psycopg2.connect(database=target_db, user=db_user, password=user_password, host='localhost')
@@ -55,15 +61,26 @@ avg_moisture = round((measurements / 15))
 # read temperature from the temperature sensor
 temp = round(ss.get_temp(),1)
  
-if avg_moisture < 720:
-	waterPlant()
+# Operate pump
+#if avg_moisture < 1200:
+#	waterPlant()
 
+print("==== Soil measurements ====")
 print("temp: " + str(temp))
 print("average moisture: " + str(avg_moisture))
 print("max moisture: " + str(max_moisture))
 print("min moisture: " + str(min_moisture))
+print(" ") # New line
+print("==== Air meaurements ====")
+print("Air temp: {0:0.1f}*C".format(air_temperature))
+print("Air moisture: {0:0.1f}%".format(air_humidity))
+
+# Insert soil moisture measurement from STEMMA soil sensor in database
 cur.execute("INSERT INTO soil_measurements (MOISTURE, MAX_MOISTURE, MIN_MOISTURE, PLANT) VALUES (%s, %s, %s, %s)", (avg_moisture, max_moisture, min_moisture, plant))
 
-#con.commit()
+# Insert value of DHT22 sensor in database
+cur.execute("INSERT INTO air_measurements (AIR_HUMIDITY, TEMP)VALUES (%s, %s)", (round(air_humidity,1),  round(air_temperature,1)))
+
+# Insert STEMMA soil sensor temperature measurements in database
 cur.execute("INSERT INTO temp_measurements (TEMP, PLANT) VALUES (%s, %s)", (temp, plant))
 con.commit()
