@@ -83,15 +83,15 @@ if datatype == 'json':
 	data = '{"Temp": [' + str(epoch_time) + ', ' + str(temp) + '], "Humidity": [' + str(epoch_time) + ', ' + humidity + '], "Moisture": ['+ str(epoch_time) +', ' + str(avg_moisture) + '] }'
 	print(data)
 else:
-print("==== Soil measurements ====")
-print("temp: " + str(temp))
-print("average moisture: " + str(avg_moisture))
-print("max moisture: " + str(max_moisture))
-print("min moisture: " + str(min_moisture))
-print(" ") # New line
-print("==== Air meaurements ====")
-print("Air temp: {0:0.1f}*C".format(air_temperature))
-print("Air humidity: {0:0.1f}%".format(air_humidity))
+	print("==== Soil measurements ====")
+	print("temp: " + str(temp))
+	print("average moisture: " + str(avg_moisture))
+	print("max moisture: " + str(max_moisture))
+	print("min moisture: " + str(min_moisture))
+	print(" ") # New line
+	print("==== Air meaurements ====")
+	print("Air temp: {0:0.1f}*C".format(air_temperature))
+	print("Air humidity: {0:0.1f}%".format(air_humidity))
 
 # Insert soil moisture measurement from STEMMA soil sensor in database
 cur.execute("INSERT INTO soil_measurements (MOISTURE, MAX_MOISTURE, MIN_MOISTURE, PLANT) VALUES (%s, %s, %s, %s)", (avg_moisture, max_moisture, min_moisture, plant))
