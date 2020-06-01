@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import time
+import sys
 import psycopg2
 import busio
 from config import *
@@ -31,6 +32,9 @@ def waterPlant():
 		time.sleep(5)
 
 	print('DONE')
+
+# Variabel used to specify how data is returned. 
+ datatype = sys.argv[1]
 
 # DHT22 sensor readout
 dht_sensor = Adafruit_DHT.DHT22
@@ -72,6 +76,13 @@ temp = round(ss.get_temp(),1)
 #if avg_moisture < 1200:
 #	waterPlant()
 
+# If a datatype json has been provided, print data as json string
+if datatype == 'json':
+	epoch_time = int(time.time())
+	humidity = '{0:0.1f}%'.format(air_humidity)
+	data = '{"Temp": [' + str(epoch_time) + ', ' + str(temp) + '], "Humidity": [' + str(epoch_time) + ', ' + humidity + '], "Moisture": ['+ str(epoch_time) +', ' + str(avg_moisture) + '] }'
+	print(data)
+else:
 print("==== Soil measurements ====")
 print("temp: " + str(temp))
 print("average moisture: " + str(avg_moisture))
@@ -80,7 +91,7 @@ print("min moisture: " + str(min_moisture))
 print(" ") # New line
 print("==== Air meaurements ====")
 print("Air temp: {0:0.1f}*C".format(air_temperature))
-print("Air moisture: {0:0.1f}%".format(air_humidity))
+print("Air humidity: {0:0.1f}%".format(air_humidity))
 
 # Insert soil moisture measurement from STEMMA soil sensor in database
 cur.execute("INSERT INTO soil_measurements (MOISTURE, MAX_MOISTURE, MIN_MOISTURE, PLANT) VALUES (%s, %s, %s, %s)", (avg_moisture, max_moisture, min_moisture, plant))
