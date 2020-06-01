@@ -12,14 +12,21 @@ import Adafruit_DHT
 
 def waterPlant():
 	print(GPIO.getmode())
-	GPIO.setup(26, GPIO.OUT)
+	channel = 26
+	GPIO.setup(channel, GPIO.OUT)
+	channel_is_on = GPIO.input(channel)
+	
+	if channel_is_on:
+		print('on')
+	else:
+		print('No pump')
 	
 	time.sleep(2)
 	for i in range(4):
-		GPIO.output(26, True)
+		GPIO.output(channel, True)
 		print('switching pump: ON')
 		time.sleep(225)
-		GPIO.output(26, False)
+		GPIO.output(channel, False)
 		print('pump: OFF')	
 		time.sleep(5)
 
