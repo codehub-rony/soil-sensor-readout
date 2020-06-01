@@ -34,7 +34,9 @@ def waterPlant():
 	print('DONE')
 
 # Variabel used to specify how data is returned. 
-datatype = sys.argv[1]
+datatype = 'text'
+if len(sys.argv) > 1:
+	datatype = sys.argv[1]
 
 # DHT22 sensor readout
 dht_sensor = Adafruit_DHT.DHT22
